@@ -23,7 +23,7 @@ sub convert_filename($)
 	($fname) = @_;
 	$fname =~ s/[\:\*\\\/\?\|<>"]/_/g;
 	$fname =~ s/^[\s\.]+|[\s\.]+$//g;
-	return encode('cp1252', $fname);
+	return encode('cp1252', $fname, sub{return '_';});
 }
 
 sub download_file($$)
@@ -94,7 +94,7 @@ sub main($)
 	($arg) = @_;
 	die "ERROR: No argument specified" if not $arg;
 	
-	binmode STDOUT, ":encoding(cp850)";
+	binmode STDOUT, ":encoding(utf-8)";
 	
 	if ($arg =~ /^https?:/)
 	{
