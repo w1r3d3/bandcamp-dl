@@ -32,9 +32,9 @@ sub download_file($$)
 	
 	if (-e $fname && -s $fname)
 	{
-		print "\tSkip '$fname', file exists already\n";
+		print "\tSkip '$fname' (file exists already)\n";
 	}
-	else
+	elsif ($url)
 	{
 		print "\tGet '$fname' from '$url'\n";
 		$data = get($url) or print "\t\tERROR: Failed to download!\n";
@@ -47,6 +47,10 @@ sub download_file($$)
 				close $out;
 			}
 		}
+	}
+	else
+	{
+		print "\tSkip '$fname' (download not available for this track)\n";
 	}
 }
 
@@ -67,11 +71,9 @@ sub download_album($)
 		$trackinfo = from_json($1);
 		$folder = convert_filename($artist.' - '.$title);
 		
-		print "\tAlbum: '$artist' - '$title'\n";
+		print "\t'$artist' - '$title'\n";
 		
-		print "\tFolder: $folder\n";
 		mkdir $folder;
-		
 		download_file($folder.'/cover.jpg', 'https://f4.bcbits.com/img/a'.$cover.'_10.jpg');
 		
 		for (@$trackinfo)
