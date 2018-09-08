@@ -87,7 +87,7 @@ sub download_album($)
 	}
 	else
 	{
-		print "ERROR: Failed to fetch data from '$album_url'\n";
+		print "\tERROR: Failed to fetch data from '$album_url'\n";
 	}
 }
 
